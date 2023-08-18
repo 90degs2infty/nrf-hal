@@ -70,6 +70,36 @@ where
     }
 }
 
+impl<T, W, P> Timer<T, W, TimerMode<P>, Stopped, BasicIRQsDisabled>
+where
+    T: Instance + Deref<Target = BasicRegBlock>,
+{
+    /// Shut the timer down and return the underlying pac-level peripheral.
+    ///
+    /// The peripheral is left stopped in timer mode with the prescale set to zero, width set to
+    /// 32 and all interrupts disabled.
+    pub fn free(timer: Self) -> T {
+        ensure_prescale_0!(timer.timer);
+        ensure_width_32!(timer.timer);
+        timer.timer
+    }
+}
+
+impl<T, W, P> Timer<T, W, TimerMode<P>, Stopped, ExtendedIRQsDisabled>
+where
+    T: Instance + Deref<Target = ExtendedRegBlock>,
+{
+    /// Shut the timer down and return the underlying pac-level peripheral.
+    ///
+    /// The peripheral is left stopped in timer mode with the prescale set to zero, width set to
+    /// 32 and all interrupts disabled.
+    pub fn free(timer: Self) -> T {
+        ensure_prescale_0!(timer.timer);
+        ensure_width_32!(timer.timer);
+        timer.timer
+    }
+}
+
 impl<T> Timer<T, W32, CounterMode, Stopped, BasicIRQsDisabled>
 where
     T: Instance + Deref<Target = BasicRegBlock>,
@@ -91,6 +121,38 @@ where
         initialize_peripheral!(timer, 0, 1, 2, 3, 4, 5);
         set_mode!(timer, low_power_counter);
         timer!(timer)
+    }
+}
+
+impl<T, W> Timer<T, W, CounterMode, Stopped, BasicIRQsDisabled>
+where
+    T: Instance + Deref<Target = BasicRegBlock>,
+{
+    /// Shut the timer down and return the underlying pac-level peripheral.
+    ///
+    /// The peripheral is left stopped in timer mode with the prescale set to zero, width set to
+    /// 32 and all interrupts disabled.
+    pub fn free(timer: Self) -> T {
+        set_mode!(timer.timer, timer);
+        ensure_prescale_0!(timer.timer);
+        ensure_width_32!(timer.timer);
+        timer.timer
+    }
+}
+
+impl<T, W> Timer<T, W, CounterMode, Stopped, ExtendedIRQsDisabled>
+where
+    T: Instance + Deref<Target = ExtendedRegBlock>,
+{
+    /// Shut the timer down and return the underlying pac-level peripheral.
+    ///
+    /// The peripheral is left stopped in timer mode with the prescale set to zero, width set to
+    /// 32 and all interrupts disabled.
+    pub fn free(timer: Self) -> T {
+        set_mode!(timer.timer, timer);
+        ensure_prescale_0!(timer.timer);
+        ensure_width_32!(timer.timer);
+        timer.timer
     }
 }
 
