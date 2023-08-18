@@ -21,6 +21,10 @@ edition = "2018"
 nrf52840-pac = "0.12.2"
 paste = "1.0"
 
+[dependencies.nrf52-proc-macros]
+path = "../nrf52-proc-macros"
+version = "=0.1.0"
+
 [dependencies.nrf-hal-common]
 path = "../nrf-hal-common"
 default-features = false
