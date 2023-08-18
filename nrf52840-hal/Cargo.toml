@@ -19,6 +19,7 @@ edition = "2018"
 
 [dependencies]
 nrf52840-pac = "0.12.2"
+paste = "1.0"
 
 [dependencies.nrf-hal-common]
 path = "../nrf-hal-common"
