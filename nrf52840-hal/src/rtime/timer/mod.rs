@@ -74,10 +74,10 @@ impl<T> Timer<T, W32, CounterMode, Stopped, BasicIRQsDisabled>
 where
     T: Instance + Deref<Target = BasicRegBlock>,
 {
-    /// Turn a PAC-level timer peripheral into a HAL-level timer running in counter mode.
+    /// Turn a PAC-level timer peripheral into a HAL-level timer running in low power counter mode.
     pub fn counter(timer: T) -> Self {
         initialize_peripheral!(timer, 0, 1, 2, 3);
-        set_mode!(timer, counter);
+        set_mode!(timer, low_power_counter);
         timer!(timer)
     }
 }
@@ -86,10 +86,10 @@ impl<T> Timer<T, W32, CounterMode, Stopped, ExtendedIRQsDisabled>
 where
     T: Instance + Deref<Target = ExtendedRegBlock>,
 {
-    /// Turn a PAC-level timer peripheral into a HAL-level timer running in counter mode.
+    /// Turn a PAC-level timer peripheral into a HAL-level timer running in low power counter mode.
     pub fn counter(timer: T) -> Self {
         initialize_peripheral!(timer, 0, 1, 2, 3, 4, 5);
-        set_mode!(timer, counter);
+        set_mode!(timer, low_power_counter);
         timer!(timer)
     }
 }
